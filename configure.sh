@@ -41,7 +41,7 @@ fi
 # TARGETS
 #
 cfgdir=$(dirname $0)
-ignore=" -regextype posix-extended -and -not -regex '.*/#.*#|.*\.hg.*|.*\.git.*|.*~|.*configure\.sh|.*README\.md|.*AutoHotkey.*|'"
+ignore=" -regextype posix-extended -and -not -regex '.*/#.*#|.*\.hg.*|.*\.git/.*|.*~|.*configure\.sh|.*README\.md|.*AutoHotkey.*|'"
 
 files=$(find "$cfgdir" \( -type f -or -type l \) $ignore -print)
 
