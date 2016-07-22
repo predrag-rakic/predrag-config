@@ -1,0 +1,62 @@
+set -g prefix `
+set -g history-limit 5000
+set -g repeat-time 1000
+set -g visual-bell off
+set -g bell-action any
+set -g set-titles on
+set -g pane-active-border-fg colour5
+set -g display-panes-time 10000
+set -g display-time 3000
+set -g status-bg black
+set -g status-fg white
+set -g status-left '#[fg=green]#h '
+set -g status-right '#T %H:%M'
+set -g base-index 1
+set -g pane-base-index 1
+set -g update-environment 'DISPLAY SSH_ASKPASS SSH_AUTH_SOCK SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY DBUS_SESSION_BUS_ADDRESS LANG'
+set -g utf8
+setw -g utf8
+
+set -g mouse on
+set -g mouse-utf8 off
+bind -n WheelUpStatus next-window
+bind -n WheelDownStatus previous-window
+bind -n WheelUpPane if-shell -F -t = "#{mouse_any_flag}" "send-keys -M" "if -Ft= '#{pane_in_mode}' 'send-keys -M' 'select-pane -t=; copy-mode -e; send-keys -M'"
+bind -n WheelDownPane select-pane -t= \; send-keys -M
+bind -t emacs-copy WheelUpPane   halfpage-up
+bind -t emacs-copy WheelDownPane halfpage-down
+
+setw -g mode-keys emacs
+setw -g window-status-current-fg red
+setw -g xterm-keys on
+setw -g wrap-search off
+setw -g window-status-bell-fg magenta
+
+unbind -T root MouseDrag1Pane
+unbind C-b
+
+bind C-a last-window
+bind ` last-window
+bind a send-prefix
+
+bind -r n next-window
+bind -r p previous-window
+bind -r b swap-window -t -1
+bind -r f swap-window -t +1
+bind -r o select-pane -t :.+
+
+bind \ run-shell "tmux save-buffer - | xsel --primary --input"
+# bind m run-shell "tmux_toggle_mouse"
+
+bind -t emacs-copy M-Right next-word-end
+bind -t emacs-copy M-Left  previous-word
+
+new weechat
+split-window -v
+swap-pane -s 1 -t 2
+split-window -t 1 -h
+select-pane -t 3
+
+neww -n dev
+neww
+neww
