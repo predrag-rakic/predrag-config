@@ -3,12 +3,12 @@
 [alias]
 	co  = checkout
 	d   = diff
-	l   = log --decorate --graph --all
+	l   = log --decorate --graph --all -4
 	st  = status
 	fe  = fetch
 	mas = checkout master
 	br  = branch
         po  = push origin
-        ll  = "log --format=format:'%C(red)%h%C(reset) %C(green)%an%C(reset) %C(yellow)(%ar)%C(reset) %C(blue)%d%C(reset) %C(white)%s%C(reset)' --abbrev-commit --date=relative --graph --all"
+        ll  = "log --format=format:'%C(red)%h%C(reset) %C(green)%an%C(reset) %C(yellow)(%ar)%C(reset) %C(blue)%d%C(reset) %C(white)%s%C(reset)' --abbrev-commit --date=relative --graph --all -12"
 [push]
 	default = simple
