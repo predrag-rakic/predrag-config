@@ -2,11 +2,11 @@
 	name = Predrag Rakic
 [alias]
 	co  = checkout
+	mas = checkout master
 	d   = diff
 	l   = log --decorate --graph --all -4
 	st  = status
 	fe  = fetch
-	mas = checkout master
 	br  = branch
 	cm  = commit -a -m
 	wip = commit -a -m "WIP"
