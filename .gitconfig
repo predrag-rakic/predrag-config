@@ -12,6 +12,7 @@
 	wip = commit -a -m "WIP"
 	po  = push origin
 	ll  = "log --format=format:'%C(red)%h%C(reset) %C(green)%an%C(reset) %C(yellow)(%ar)%C(reset) %C(blue)%d%C(reset) %C(white)%s%C(reset)' --abbrev-commit --date=relative --graph --all -12"
+	mam = !git fetch && git checkout master && git merge origin/master && git ll
 
 [push]
 	default = current
