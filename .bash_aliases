@@ -15,4 +15,7 @@ alias infra="BUNDLE_GEMFILE=/home/pec/w/inframan/Gemfile bundle exec inframan"
 alias ecs="BUNDLE_GEMFILE=/home/pec/w/inframan/Gemfile bundle exec inframan ecs"
 alias cluster="ecs cluster"
 
+# Tmux
+alias tm="tmux new \; neww \; select-w -t 1 "
+
 . ~/.bash_prompt
