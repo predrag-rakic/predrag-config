@@ -16,6 +16,10 @@ alias ecs="BUNDLE_GEMFILE=/home/pec/w/inframan/Gemfile bundle exec inframan ecs"
 alias cluster="ecs cluster"
 
 # Tmux
-alias tm="tmux new \; neww \; select-w -t 1 "
+alias tm="tmux new -s \`basename \$(pwd)\` \; \
+               send-keys ll C-m \; \
+               split-w -h \; \
+               send-keys 'g --no-pager ll' C-m C-m C-m 'g st' C-m \; \
+               neww \; select-w -t 1 "
 
 . ~/.bash_prompt
