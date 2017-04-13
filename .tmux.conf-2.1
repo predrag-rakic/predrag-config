@@ -26,7 +26,7 @@ bind -n WheelDownPane select-pane -t= \; send-keys -M
 bind -t emacs-copy WheelUpPane   halfpage-up
 bind -t emacs-copy WheelDownPane halfpage-down
 
-setw -g mode-keys emacs
+setw -g mode-keys vi
 setw -g window-status-current-fg red
 setw -g xterm-keys on
 setw -g wrap-search off
@@ -45,18 +45,14 @@ bind -r b swap-window -t -1
 bind -r f swap-window -t +1
 bind -r o select-pane -t :.+
 
+bind    Up   select-pane -U
+bind    Down select-pane -D
+
 bind \ run-shell "tmux save-buffer - | xsel --primary --input"
 # bind m run-shell "tmux_toggle_mouse"
 
 bind -t emacs-copy M-Right next-word-end
 bind -t emacs-copy M-Left  previous-word
 
-new weechat
-split-window -v
-swap-pane -s 1 -t 2
-split-window -t 1 -h
-select-pane -t 3
+bind-key C-r source-file ~/.tmux.conf \; display "Config reloaded!"
 
-neww -n dev
-neww
-neww
