@@ -18,8 +18,8 @@ alias cluster="ecs cluster"
 # Tmux
 alias tm="tmux new -s \`basename \$(pwd)\` \; \
                send-keys ll C-m \; \
-               split-w -h \; \
-               send-keys 'g --no-pager ll' C-m C-m C-m 'g st' C-m \; \
-               neww \; select-w -t 1 "
+               split-w  \; \
+               send-keys 'g --no-pager ll -5' C-m C-m C-m 'g st' C-m\; \
+               neww \; select-window -t 1 \; select-pane -t 1"
 
 . ~/.bash_prompt
