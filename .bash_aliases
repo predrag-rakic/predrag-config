@@ -10,6 +10,9 @@ alias gbr="git branch"
 alias artc="cd ~/w/artifact-client/"
 alias arts="cd ~/w/artifact-server/"
 
+# Docker
+alias d="docker"
+
 # Inframan
 alias infra="BUNDLE_GEMFILE=/home/pec/w/inframan/Gemfile bundle exec inframan"
 alias ecs="BUNDLE_GEMFILE=/home/pec/w/inframan/Gemfile bundle exec inframan ecs"
