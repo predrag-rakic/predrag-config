@@ -10,6 +10,9 @@ alias gbr="git branch"
 alias artc="cd ~/w/artifact-client/"
 alias arts="cd ~/w/artifact-server/"
 
+# K8s
+alias k="kubectl"
+
 # Docker
 alias d="docker"
 
