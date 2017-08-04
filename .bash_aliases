@@ -17,8 +17,8 @@ alias k="kubectl"
 alias d="docker"
 
 # Inframan
-alias infra="BUNDLE_GEMFILE=/home/pec/w/inframan/Gemfile bundle exec inframan"
-alias ecs="BUNDLE_GEMFILE=/home/pec/w/inframan/Gemfile bundle exec inframan ecs"
+alias infra="BUNDLE_GEMFILE=/home/psr/w/inframan/Gemfile bundle exec inframan"
+alias ecs="BUNDLE_GEMFILE=/home/psr/w/inframan/Gemfile bundle exec inframan ecs"
 alias cluster="ecs cluster"
 
 # Tmux
