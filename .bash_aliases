@@ -12,6 +12,8 @@ alias arts="cd ~/w/artifact-server/"
 
 # K8s
 alias k="kubectl"
+alias kx="kubectx"
+alias kn="kubens"
 alias heapster='export GRAFANA=$(k -n kube-system get po -l "k8s-app=grafana" -o jsonpath="{.items[0].metadata.name}"); \
                 k -n kube-system port-forward $GRAFANA 12345:3000'
 
