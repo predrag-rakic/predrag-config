@@ -2,6 +2,9 @@
 source /usr/share/bash-completion/completions/git
 complete -o bashdefault -o default -o nospace -F _git g
 
+# Dir aliases
+alias plu="cd ~/w/plumber"
+
 # Git aliases
 alias g="git"
 alias gst="git status"
