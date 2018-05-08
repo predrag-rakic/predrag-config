@@ -38,6 +38,10 @@ alias tm="tmux new -s \`basename \$(pwd)\` \; \
 # exa
 alias lll="exa -la --git"
 
+# Env vars
+export EDITOR=vim
+
+# bash prompt
 if [ -f ~/.bash_prompt ]; then
 . ~/.bash_prompt
 fi
