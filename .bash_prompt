@@ -12,4 +12,18 @@ parse_git_status() {
   echo -n "`parse_git_status_untracked``parse_git_status_tracked`"
 }
 
-PS1='\u@\h \[\033[32m\]\w\[\033[33m\] $(parse_git_branch)$(parse_git_status)\[\033[00m\]$ '
+__kube_ps1() {
+    # Get current context
+    CONTEXT=$(cat ~/.kube/config | grep "current-context:" | sed "s/current-context: //")
+
+    if [ -n "$CONTEXT" ]; then
+        echo "(${CONTEXT})"
+    fi
+}
+
+NORMAL="$(echo -e "\e[39m")"
+BLUE="$(echo -e "\e[34m")"
+YELLOW="$(echo -e "\e[33m")"
+GREEN="$(echo -e "\e[32m")"
+
+export PS1='\u ${GREEN}\w ${BLUE}$(__kube_ps1) ${YELLOW}$(parse_git_branch)$(parse_git_status)${NORMAL}\n$ '
