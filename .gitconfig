@@ -1,6 +1,7 @@
 [user]
 	name = Predrag Rakic
 [alias]
+	a   = add
 	co  = checkout
 	mas = checkout master
 	d   = diff
