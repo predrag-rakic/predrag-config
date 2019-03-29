@@ -10,6 +10,8 @@
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="robbyrussell"
 ZSH_THEME="agnoster"
+ZSH_THEME="juanghurtado"
+ZSH_THEME="psr"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -108,4 +110,3 @@ export LESS=-XFR
 if [ -f ~/.aliases ]; then
 . ~/.aliases
 fi
-
