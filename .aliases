@@ -37,6 +37,15 @@ alias lll="exa -la --git"
 # stern
 alias ppllogs="stern 'plumber-.{8}-' -c plumber$ --output raw --since 15m > /tmp/ppl_logs & less +F /tmp/ppl_logs ; fg"
 
+# Scheme service
+alias scheme-db="docker run -d --rm --name db --network=host mdillon/postgis:10; \
+  sleep 5; \
+  psql -U postgres -h localhost postgres -c 'create user bluecode_core with superuser; create user bluecode with superuser;' \
+
+  mix do ecto.create, ecto.migrate, seeds.all
+"
+
 # Env vars
 export EDITOR=vim
+export BC_DEV_DOMAIN=prakic.bloomco.de
 
