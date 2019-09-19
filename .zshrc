@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
   export ZSH="/home/psr/.oh-my-zsh"
@@ -110,3 +110,8 @@ export LESS=-XFR
 if [ -f ~/.aliases ]; then
 . ~/.aliases
 fi
+
+. $HOME/.asdf/asdf.sh
+
+. $HOME/.asdf/completions/asdf.bash
+
