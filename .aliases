@@ -39,7 +39,7 @@ alias ppllogs="stern 'plumber-.{8}-' -c plumber$ --output raw --since 15m > /tmp
 
 # Scheme service
 alias scheme-db="docker run -d --rm --name db --network=host mdillon/postgis:10 postgres -N 200 ; \
-  sleep 5; \
+  sleep 8; \
   psql -U postgres -h localhost postgres -c 'create user bluecode_core with superuser; create user bluecode with superuser;' \
 
   mix do ecto.create, ecto.migrate, seeds.all
@@ -47,5 +47,10 @@ alias scheme-db="docker run -d --rm --name db --network=host mdillon/postgis:10 
 
 # Env vars
 export EDITOR=vim
+
 export BC_DEV_DOMAIN=prakic.bloomco.de
+export BC_DEV_NO_WATCH_ASSETS=1
+export BC_DEV_ISSUER_PROC_SHARED_API_KEY=qwerty
+export BC_DEV_CLEARING_PROC_SHARED_API_KEY=yemen-redbird-session-scorpio
+export ERL_AFLAGS="-kernel shell_history enabled -kernel shell_history_file_bytes 1024000"
 
