@@ -6,6 +6,7 @@ sudo apt install \
   aptitude \
   curl \
   tmux \
+  ssh-askpass \
   docker.io \
   haproxy \
   libsodium-dev \
