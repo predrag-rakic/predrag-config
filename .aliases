@@ -52,5 +52,6 @@ export BC_DEV_DOMAIN=prakic.bloomco.de
 export BC_DEV_NO_WATCH_ASSETS=1
 export BC_DEV_ISSUER_PROC_SHARED_API_KEY=qwerty
 export BC_DEV_CLEARING_PROC_SHARED_API_KEY=yemen-redbird-session-scorpio
-export ERL_AFLAGS="-kernel shell_history enabled -kernel shell_history_file_bytes 1024000"
+export BC_DEV_ADMIN_PASSWORD=developer@bluecode.com
+export ERL_AFLAGS="-kernel shell_history enabled -kernel shell_history_file_bytes 1024000 +S3"
 
