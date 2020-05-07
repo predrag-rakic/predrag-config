@@ -68,6 +68,7 @@ ZSH_THEME="psr"
 plugins=(
   git
   kubectl
+  ssh-agent
   zsh-syntax-highlighting
   zsh-autosuggestions
 )
