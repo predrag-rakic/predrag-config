@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+# gh-deploy bluecodecom/scheme-services prod bci-int
+#
+
+set -euo pipefail
+
+GH_ACCESS_TOKEN=$(cat ~/.gh-access-token)
+
+curl -u predrag-rakic:$GH_ACCESS_TOKEN \
+  "https://api.github.com/repos/$1/deployments" -d @- <<EOF
+{
+  "ref":"$2",
+  "description": "triggered by cURL",
+  "required_contexts": [],
+  "auto_merge": false,
+  "environment":"$3"
+}
+EOF
+
