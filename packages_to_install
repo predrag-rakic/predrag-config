@@ -5,6 +5,7 @@ sudo apt install \
   mc \
   aptitude \
   curl \
+  jq \
   tmux \
   ssh-askpass \
   docker.io \
