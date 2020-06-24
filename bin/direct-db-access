@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# 1. sudo wg-quick up wg-bci-xxx (dev, int, prod)
+# 2. aws-vault exec --assume-role-ttl=1h bci-xxx-su (dev, int, prod)
+#
+
+[ -z "$DEBUG" ] || set -x
+
+set -eou pipefail
+
+echo "#####################################"
+echo "Logging into database via psql"
+
+export PGDATABASE="$(chamber read db/main/bluecode_scheme/main/psql pgdatabase -q)"
+echo "Database: $PGDATABASE"
+
+export PGUSER="$(chamber read db/main/bluecode_scheme/main/psql pguser -q)"
+echo "User: $PGUSER"
+
+export PGHOST="$(chamber read db/main reader-endpoint -q)"
+echo "Host: $PGHOST"
+echo "#####################################"
+echo "\n\n\n"
+
+set +x
+export PGPASSWORD="$(chamber read db/main/bluecode_scheme/main/psql pgpassword -q)"
+set -x
+
+exec psql
+
