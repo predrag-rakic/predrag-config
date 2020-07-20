@@ -3,6 +3,7 @@ sudo apt install \
   vim \
   git gitk \
   mc \
+  sysstat \
   aptitude \
   curl \
   jq \
