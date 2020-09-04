@@ -25,11 +25,23 @@ alias ecs="BUNDLE_GEMFILE=/home/psr/w/inframan/Gemfile bundle exec inframan ecs"
 alias cluster="ecs cluster"
 
 # Tmux
-alias tm="tmux new -s \`basename \$(pwd)\` \; \
+alias tm="cd ~/w/scheme-services ; \
+          tmux new -s \`basename \$(pwd)\` \; \
                send-keys ll C-m \; \
                split-w  \; \
                send-keys 'g --no-pager ll -5' C-m C-m C-m 'g st' C-m\; \
-               neww \; select-window -t 1 \; select-pane -t 1"
+               neww \; send-keys 'psql -U postgres -h localhost sdk_api_dev' \; \
+               split-w \; send-keys 'sudo haproxy -f etc/bluecode/haproxy/haproxy.cfg' \; \
+               split-w \; \
+               neww \; select-window -t 1 \; select-pane -t 1 \; \
+               neww \; \
+               neww \; \
+               send-keys 'cd ../acquibase' C-m \; \
+               split-w \; send-keys 'cd ../acquibase' C-m \; \
+               neww \; \
+               select-window -t 1 \; select-pane -t 1 \; \
+               send-keys 'scheme-db' \; \
+               "
 
 # exa
 alias lll="exa -la --git"
