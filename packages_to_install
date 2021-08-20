@@ -24,4 +24,4 @@ CHROME=google-chrome-stable_current_amd64.deb
 sudo dpkg -i google-chrome-stable_current_amd64.deb
 
 sudo snap install code --classic
-
+sudo snap install slack --classic
