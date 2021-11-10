@@ -51,7 +51,7 @@ defmodule T do
     |> List.wrap()
     |> Enum.map(&Path.wildcard/1)
     |> List.flatten()
-    |> Kernel.ParallelCompiler.require()
+    |> Kernel.ParallelCompiler.compile()
 
     test_files
     |> List.wrap()
