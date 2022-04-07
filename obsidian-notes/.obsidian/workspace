@@ -4,11 +4,14 @@
     "type": "split",
     "children": [
       {
-        "id": "20dd6ad7edad314a",
+        "id": "f0f95381b2695c10",
         "type": "leaf",
         "state": {
-          "type": "empty",
-          "state": {}
+          "type": "markdown",
+          "state": {
+            "file": "bluecode/with Daniel/20220408.md",
+            "mode": "source"
+          }
         }
       }
     ],
@@ -65,6 +68,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "bluecode/with Daniel/20220408.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -82,6 +86,16 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "20dd6ad7edad314a",
-  "lastOpenFiles": []
+  "active": "f0f95381b2695c10",
+  "lastOpenFiles": [
+    "bluecode/with Daniel/20220408.md",
+    "Deploymnt.md",
+    "software_development/Tools/Warp terminal.md",
+    "software_development/Sasa Juric/Clarity talk.md",
+    "software_development/LoC per day.md",
+    "bluecode/API/biz.md",
+    "bluecode/API/local.md",
+    "bluecode/API/examples.md",
+    "Untitled 1.md"
+  ]
 }
