@@ -1,0 +1,3 @@
+- https://www.youtube.com/watch?v=lJ8ydIuPFeU&ab_channel=StrangeLoopConference
+- https://www.youtube.com/watch?v=0b3sR32m0nU&ab_channel=SpringDeveloper
+- https://www.youtube.com/watch?v=nP1aK4DLu-k&ab_channel=SkillsMatter%28IncorporatingYOW%21Conferences%29
