@@ -4,15 +4,30 @@
     "type": "split",
     "children": [
       {
-        "id": "f0f95381b2695c10",
+        "id": "d3321d5b210eaf44",
         "type": "leaf",
+        "dimension": 31.424481030780242,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "software_development/LoC per day.md",
+            "file": "bluecode/Architecture/Payment Method selection Algorithm.md",
             "mode": "source"
           }
-        }
+        },
+        "group": "5f7d13be48d8d93a"
+      },
+      {
+        "id": "10f60df7ae50b469",
+        "type": "leaf",
+        "dimension": 68.57551896921976,
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "bluecode/Architecture/Payment Method selection Algorithm.md",
+            "mode": "preview"
+          }
+        },
+        "group": "5f7d13be48d8d93a"
       }
     ],
     "direction": "vertical"
@@ -52,7 +67,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "6ee145dc509cba31",
@@ -68,7 +84,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "software_development/LoC per day.md",
+                "file": "bluecode/Architecture/Payment Method selection Algorithm.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -86,17 +102,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "f0f95381b2695c10",
+  "active": "d3321d5b210eaf44",
   "lastOpenFiles": [
+    "bluecode/Architecture/Payment Method selection Algorithm.md",
+    "TODO.md",
     "software_development/LoC per day.md",
+    "software_development/Sasa Juric/Clarity talk.md",
+    "software_development/Tools/Alloy 6.md",
+    "Job applications/Gitstart/Timeline.md",
     "Job applications/SoundLines - Seattle/Timeline.md",
-    "bluecode/TODO/DMS capture TODO.md",
-    "bluecode/with Daniel/20220506.md",
-    "bluecode/TODO/Update scheme services.md",
-    "Deploymnt.md",
-    "software_development/Gil Tene/How not to measure latency.md",
-    "bluecode/API command-line calls/biz.md",
-    "bluecode/with Daniel/20220408.md",
-    "software_development/Tools/Warp terminal.md"
+    "software_development/Jose Valim/Livebook.md",
+    "bluecode/TODO/Decouple payments_web from VAS.md",
+    "Solarni sistemi/Velibor Novi Sad.md"
   ]
 }

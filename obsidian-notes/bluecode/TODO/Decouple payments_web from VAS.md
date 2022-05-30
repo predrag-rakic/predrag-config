@@ -1,0 +1,1 @@
+Currently payments_web depends on VAS mostly/only because of ??? (beeing able to see who changed what using admin)
