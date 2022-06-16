@@ -59,6 +59,8 @@ alias scheme-db="docker run -d --rm --name db --network=host mdillon/postgis:10 
 
 # Env vars
 export EDITOR=vim
+# Add indent to text in less
+export LESSOPEN="| sed 's/^/    /' %s"
 
 export BC_DEV_DOMAIN=prakic.bloomco.de
 export BC_DEV_NO_WATCH_ASSETS=1
