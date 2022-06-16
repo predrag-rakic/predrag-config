@@ -1,36 +1,55 @@
 ## Payment request flow (high level)
 ```mermaid
 flowchart LR
+b_acq_proc(EMPSA Bridge as acq procesor)
+  br_iss_proc(EMPSA Bridge as issuing proc)
 merchant(Merchant)
 ap(Acquiring Partner)
 apr(Acquiring Processor)
-ipr(Issuing/Clearing Processor)
-bridge(EMPSA Bridge)
+  br_clr_proc(EMPSA Bridge as clearing proc)
 alipay(Alipay)
+cpr(Clearing Processor)
+br_iss_proc <--> |Pairing|ts
+
 subgraph Scheme Services
-  ts(Token Server)
+  subgraph Token Server
+		dispatcher
+    ts(Vault)
+		
+	end
   subgraph Payments Gateway
 	  td(Transfer Disatcher)
+		empsa_bcai(EMPSA controller - bcai)
     subgraph Transfer Processors
-	    bc_tp(BC Processor)
-	    empsa_tp(EMPSA Processor)
-	    alipay_tp(Alipay Processor)
+      subgraph Acquiring
+				empsa_tp(EmpsaProcessor - bcaa)
+	      alipay_tp(Alipay Processor)
+      end
+      subgraph Issuing
+        bc_tp(BC Processor)
+      end
     end
 
-    td --> bc_tp
 		td --> empsa_tp
 		td --> alipay_tp
+    td --> bc_tp
   end
   td<-->|Barcode Lookup|ts
 end
+
+apr<-->dispatcher
 
 merchant -.-> ap -.-> apr
 merchant
 -->apr
 -->|Payments API|td
-bc_tp-->|BC Clearing API|ipr
-empsa_tp -->|Empsa API| bridge
+empsa_tp -->|Empsa API| br_clr_proc
 alipay_tp -->|Alipay API| alipay
+bc_tp-->|BC Clearing API|cpr
+
+b_acq_proc-->empsa_bcai
+empsa_bcai-->td
+
 ```
 
 ## Payments API
@@ -40,13 +59,13 @@ alipay_tp -->|Alipay API| alipay
 ### Transfer-initiate request processing
 Talking about SMS payment and DMS pre_auth request
 ```mermaid
-flowchart LR
+flowchart TB
 auth(Caller Authentication)
-ipms(Iss Payment Method Names selection)
+ipms(Iss Payment Method Names lookup)
 apms(Acq Payment Method Selection)
 pp(Payment Processing)
 auth-->|Acq Partner|ipms
--->|Iss PM Names|apms
+-->|Iss PM Names, <Iss Scheme>|apms
 -->|Payment Method and Acq Membership|pp
 ```
 
@@ -57,8 +76,9 @@ auth-->|Acq Partner|ipms
 
 ### Issuing Payment Method Name Selection
 
-- PGW asks TS "What are PM names available for this token"?
-- TS responds with list of PM names available for provided token (if token is valid).
+- PGW asks TS "Here is a token, what do you know about it?" 
+  
+- TS responds with list of Iss proc scheme and list of PM names available for provided token (if token is valid).
 
 #### Acquiring Payment Method Selection
 
@@ -71,7 +91,5 @@ auth-->|Acq Partner|ipms
   -  Acq PM Configuration and 
   -  Acq Membership
 - Acq PM Configuration determines:
-  - Transfer Processor (ex Payment Processor - Transfer Processor is probably better because that processore processes refunds also).
-- Transfer Processor contains list of available schemes.
-  - Do we need this? To make sure Alipay acq membership is not used on BC Transfer Processor?
-  
+  - Transfer Processor (ex Payment Processor - Transfer Processor is probably better name because that processore processes refunds also).
+- I  

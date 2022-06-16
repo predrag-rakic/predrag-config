@@ -1,5 +1,13 @@
 {
   "showLineNumber": true,
   "spellcheck": false,
-  "tabSize": 2
+  "tabSize": 2,
+  "pdfExportSettings": {
+    "pageSize": "A4",
+    "landscape": true,
+    "margin": "1",
+    "downscalePercent": 71
+  },
+  "newFileLocation": "current",
+  "showUnsupportedFiles": true
 }

@@ -4,30 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "d3321d5b210eaf44",
+        "id": "6ad30e19f16a23a3",
         "type": "leaf",
-        "dimension": 31.424481030780242,
         "state": {
           "type": "markdown",
           "state": {
             "file": "bluecode/Architecture/Payment Method selection Algorithm.md",
             "mode": "source"
           }
-        },
-        "group": "5f7d13be48d8d93a"
-      },
-      {
-        "id": "10f60df7ae50b469",
-        "type": "leaf",
-        "dimension": 68.57551896921976,
-        "state": {
-          "type": "markdown",
-          "state": {
-            "file": "bluecode/Architecture/Payment Method selection Algorithm.md",
-            "mode": "preview"
-          }
-        },
-        "group": "5f7d13be48d8d93a"
+        }
       }
     ],
     "direction": "vertical"
@@ -67,8 +52,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "6ee145dc509cba31",
@@ -102,17 +86,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "d3321d5b210eaf44",
+  "active": "6ad30e19f16a23a3",
   "lastOpenFiles": [
     "bluecode/Architecture/Payment Method selection Algorithm.md",
-    "TODO.md",
-    "software_development/LoC per day.md",
-    "software_development/Sasa Juric/Clarity talk.md",
-    "software_development/Tools/Alloy 6.md",
-    "Job applications/Gitstart/Timeline.md",
-    "Job applications/SoundLines - Seattle/Timeline.md",
-    "software_development/Jose Valim/Livebook.md",
-    "bluecode/TODO/Decouple payments_web from VAS.md",
-    "Solarni sistemi/Velibor Novi Sad.md"
+    "software_development/Code Review.md",
+    "software_development/Gil Tene/HdrHistogram.md",
+    "software_development/Tools/Extraterm.md",
+    "software_development/Tools/Warp terminal.md",
+    "software_development/Tools/GH environments.md",
+    "Daily Notes/22-06-11.md",
+    "daily_notes/22-06-11.md",
+    "Templates/daily.md",
+    "bluecode/Conversation/with Tony/We'll see when it happens.md"
   ]
 }
