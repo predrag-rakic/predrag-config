@@ -28,8 +28,13 @@ alias cluster="ecs cluster"
 alias tm="cd ~/w/scheme-services ; \
           tmux new -s \`basename \$(pwd)\` \; \
                send-keys ll C-m \; \
+               send-keys 'scheme-db' \; \
                split-w  \; \
                send-keys 'g --no-pager ll -5' C-m C-m C-m 'g st' C-m\; \
+               send-keys 'mkfifo /tmp/scheme-services-log' C-m \; \
+               send-keys 'tail -f log/application.log |  sed \"s/^/    /\" > /tmp/scheme-services-log &' C-m \; \
+               send-keys C-m \; \
+               send-keys 'less <> /tmp/scheme-services-log' \; \
                neww \; send-keys 'psql -U postgres -h localhost sdk_api_dev' \; \
                split-w \; send-keys 'sudo haproxy -f etc/bluecode/haproxy/haproxy.cfg' \; \
                split-w \; \
@@ -40,7 +45,6 @@ alias tm="cd ~/w/scheme-services ; \
                split-w \; send-keys 'cd ../acquibase' C-m \; \
                neww \; \
                select-window -t 1 \; select-pane -t 1 \; \
-               send-keys 'scheme-db' \; \
                "
 
 # exa
@@ -60,7 +64,8 @@ alias scheme-db="docker run -d --rm --name db --network=host mdillon/postgis:10 
 # Env vars
 export EDITOR=vim
 # Add indent to text in less
-export LESSOPEN="| sed 's/^/    /' %s"
+# I dont want it always - named pipe is arguably better solution
+# export LESSOPEN="| sed 's/^/    /' %s"
 
 export BC_DEV_DOMAIN=prakic.bloomco.de
 export BC_DEV_NO_WATCH_ASSETS=1
