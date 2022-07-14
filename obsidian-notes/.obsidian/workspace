@@ -6,13 +6,28 @@
       {
         "id": "6ad30e19f16a23a3",
         "type": "leaf",
+        "dimension": 38.79781420765027,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "bluecode/Architecture/Payment Method selection Algorithm.md",
+            "file": "bluecode/Event sourcing/Evented presentation.md",
             "mode": "source"
           }
-        }
+        },
+        "group": "91d7d0d3bb0728b2"
+      },
+      {
+        "id": "46b883662edda9c6",
+        "type": "leaf",
+        "dimension": 61.20218579234973,
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "bluecode/Event sourcing/Evented presentation.md",
+            "mode": "preview"
+          }
+        },
+        "group": "91d7d0d3bb0728b2"
       }
     ],
     "direction": "vertical"
@@ -52,7 +67,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "6ee145dc509cba31",
@@ -68,7 +84,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "bluecode/Architecture/Payment Method selection Algorithm.md",
+                "file": "bluecode/Event sourcing/Evented presentation.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -88,15 +104,15 @@
   },
   "active": "6ad30e19f16a23a3",
   "lastOpenFiles": [
-    "bluecode/Architecture/Payment Method selection Algorithm.md",
-    "software_development/Code Review.md",
-    "software_development/Gil Tene/HdrHistogram.md",
-    "software_development/Tools/Extraterm.md",
-    "software_development/Tools/Warp terminal.md",
-    "software_development/Tools/GH environments.md",
-    "Daily Notes/22-06-11.md",
-    "daily_notes/22-06-11.md",
-    "Templates/daily.md",
-    "bluecode/Conversation/with Tony/We'll see when it happens.md"
+    "bluecode/Event sourcing/Evented presentation.md",
+    "bluecode/Event sourcing/Evented from user perspective.md",
+    "bluecode/Event sourcing/CQRS attempt.md",
+    "Daily Notes/22-07-13.md",
+    "Daily Notes/22-06-17.md",
+    "bluecode/Conversation/with Daniel/202207??.md",
+    "bluecode/Conversation/with Daniel/20220506.md",
+    "bluecode/Conversation/with Daniel/20220408.md",
+    "in-flight.md",
+    "Elixir/Interview questions.md"
   ]
 }

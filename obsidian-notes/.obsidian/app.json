@@ -1,6 +1,6 @@
 {
   "showLineNumber": true,
-  "spellcheck": false,
+  "spellcheck": true,
   "tabSize": 2,
   "pdfExportSettings": {
     "pageSize": "A4",
@@ -9,5 +9,13 @@
     "downscalePercent": 71
   },
   "newFileLocation": "current",
-  "showUnsupportedFiles": true
+  "showUnsupportedFiles": true,
+  "spellcheckDictionary": [
+    "IEx",
+    "barcode",
+    "Evented",
+    "Evented",
+    "EEx",
+    "EEx"
+  ]
 }
