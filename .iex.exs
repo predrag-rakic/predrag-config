@@ -62,6 +62,31 @@ defmodule T do
     ExUnit.Server.modules_loaded()
     Task.await(task, timeout)
   end
+
+  def inspect_sup_structure(pid) do
+    inspect_sup_structure({"TOP LEVEL", pid, "", ""}, 0)
+  end
+
+  @offset_increment 3
+
+  def inspect_sup_structure(list, offset) when is_list(list) do
+    for {_, _, :supervisor, _} = elem <- list do
+      inspect_sup_structure(elem, offset + @offset_increment)
+    end
+  end
+
+  def inspect_sup_structure({_, pid, _, _} = input, offset) when is_pid(pid) do
+    (String.duplicate(" ", offset) <> "INPUT: " <> inspect(input, pretty: true))
+    |> IO.puts()
+
+    children = Supervisor.which_children(pid)
+
+    (String.duplicate(" ", offset) <> "CHILDREN: " <> inspect(children, pretty: true))
+    |> IO.puts()
+
+    inspect_sup_structure(children, offset)
+  end
+
 end
 
 # Dbg.trace(ExUnit.Server, :handle_call, :x)

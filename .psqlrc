@@ -30,7 +30,7 @@
 \timing
 
 -- Make bytea fields readable
-SET bytea_output = 'escape'
+SET bytea_output = 'escape';
 
 -- Unset QUIET set at the beggining of this file
 \unset QUIET

@@ -75,3 +75,4 @@ export BC_DEV_ADMIN_PASSWORD=developer@bluecode.com
 export ERL_AFLAGS="-kernel shell_history enabled -kernel shell_history_file_bytes 1024000 +S3"
 export SYSTEMTEST_DOMAIN=$BC_DEV_DOMAIN
 
+xset r rate 190 40
