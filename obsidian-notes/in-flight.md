@@ -1,165 +1,109 @@
+# Evented application EbPayments.Dms.App
+
+  
+
+THIS IS GENERATED FILE
+
+  
+
+!!!!! DO NOT MODIFY !!!!!
+
+  
+
+## List of events:
+
+  
+
+- EbPayments.Command.CreateCapture
+
+- EbPayments.Command.CreatePreAuth
+
+- EbPayments.Command.GetState
+
+- LocalEvents.V0.CaptureCallerAuthorizedV1
+
+- LocalEvents.V0.CaptureCallerNotAuthorizedV1
+
+- LocalEvents.V0.CaptureCreatedV1
+
+- LocalEvents.V0.CaptureDeclinedV1
+
+- LocalEvents.V0.PaymentMethodSelectedV1
+
+- LocalEvents.V0.PaymentMethodSelectionFailedV1
+
+- LocalEvents.V0.PreAuthApprovedV1
+
+- LocalEvents.V0.PreAuthClearingApprovedV1
+
+- LocalEvents.V0.PreAuthClearingDeclinedV1
+
+- LocalEvents.V0.PreAuthClearingRequestCreatedV1
+
+- LocalEvents.V0.PreAuthCreatedV1
+
+- LocalEvents.V0.PreAuthDeclinedV1
+
+- LocalEvents.V0.TokenNotRedeemableV1
+
+- LocalEvents.V0.TokenRedeemableV1
+
+- LocalEvents.V0.TokenRedeemedV1
+
+- LocalEvents.V0.TokenRedemptionFailedV1
+
+- :no_output_event
+
+  
+
+## Event Flowchart
+
+  
+
 ```mermaid
 
-sequenceDiagram
-
-autonumber
-
-participant ApiProxy
-
-participant Ether
+flowchart TD
 
   
 
-participant TransferAgg
+EbPayments.Command.CreateCapture-->|EbPayments.Dms.Transfer.TransferHh\nCapture: parse input|LocalEvents.V0.CaptureCreatedV1
 
-participant TsClientAgg
+EbPayments.Command.CreatePreAuth-->|EbPayments.Dms.Transfer.TransferHh\nPre-auth input validation|LocalEvents.V0.PreAuthCreatedV1
 
-participant ConsumerTxAgg
+EbPayments.Command.GetState-->|EbPayments.Dms.Transfer.TransferHh\nGet state|:no_output_event
 
-  
+LocalEvents.V0.CaptureCreatedV1-->|EbPayments.Dms.Transfer.TransferHh\nCapture: authorize requester - validate partner|LocalEvents.V0.CaptureCallerAuthorizedV1
 
-participant ClearingApiClientAgg
+LocalEvents.V0.CaptureCreatedV1-->|EbPayments.Dms.Transfer.TransferHh\nCapture: authorize requester - validate partner|LocalEvents.V0.CaptureCallerNotAuthorizedV1
 
-  
+LocalEvents.V0.CaptureCreatedV1-->|EbPayments.Dms.Transfer.TransferHh\nCapture: authorize requester - validate partner|LocalEvents.V0.CaptureDeclinedV1
 
-note over ApiProxy, ClearingApiClientAgg: Pre-authorization
+LocalEvents.V0.PaymentMethodSelectedV1-->|EbPayments.Dms.Transfer.TransferHh\nRedeem token|LocalEvents.V0.TokenRedeemedV1
 
-  
+LocalEvents.V0.PaymentMethodSelectedV1-->|EbPayments.Dms.Transfer.TransferHh\nRedeem token|LocalEvents.V0.TokenRedemptionFailedV1
 
-Note over ApiProxy: Parse request
+LocalEvents.V0.PaymentMethodSelectionFailedV1-->|EbPayments.Dms.Transfer.TransferHh\n|LocalEvents.V0.PreAuthDeclinedV1
 
-ApiProxy-->>TransferAgg: CreatePreAuth
+LocalEvents.V0.PreAuthClearingApprovedV1-->|EbPayments.Dms.Transfer.TransferHh\n|LocalEvents.V0.PreAuthApprovedV1
 
-Note over TransferAgg: Persist request
+LocalEvents.V0.PreAuthClearingDeclinedV1-->|EbPayments.Dms.Transfer.TransferHh\n|LocalEvents.V0.PreAuthDeclinedV1
 
-TransferAgg->>TsClientAgg: PreAuthCreated
+LocalEvents.V0.PreAuthClearingRequestCreatedV1-->|EbPayments.TransferProcessor.BC.ClearingApiLegacy.ClearingApiEv\nMake synchronous clearing API call|LocalEvents.V0.PreAuthClearingApprovedV1
 
-Note over TsClientAgg: Lookup token
+LocalEvents.V0.PreAuthClearingRequestCreatedV1-->|EbPayments.TransferProcessor.BC.ClearingApiLegacy.ClearingApiEv\nMake synchronous clearing API call|LocalEvents.V0.PreAuthClearingDeclinedV1
 
-alt token valid
+LocalEvents.V0.PreAuthCreatedV1-->|EbPayments.Dms.Transfer.TransferHh\nToken lookup|LocalEvents.V0.TokenNotRedeemableV1
 
-TsClientAgg->>TransferAgg: PreAuthTokenValid
+LocalEvents.V0.PreAuthCreatedV1-->|EbPayments.Dms.Transfer.TransferHh\nToken lookup|LocalEvents.V0.TokenRedeemableV1
 
-else token invalid
+LocalEvents.V0.TokenNotRedeemableV1-->|EbPayments.Dms.Transfer.TransferHh\n|LocalEvents.V0.PreAuthDeclinedV1
 
-TsClientAgg->>TransferAgg: PreAuthTokenInvalid
+LocalEvents.V0.TokenRedeemableV1-->|EbPayments.Dms.Transfer.TransferHh\nSelect payment method|LocalEvents.V0.PaymentMethodSelectedV1
 
-TransferAgg->>Ether: PreAuthDeclined
+LocalEvents.V0.TokenRedeemableV1-->|EbPayments.Dms.Transfer.TransferHh\nSelect payment method|LocalEvents.V0.PaymentMethodSelectionFailedV1
 
-Note over TransferAgg: Processing stops here!
+LocalEvents.V0.TokenRedeemedV1-->|EbPayments.Dms.Transfer.TransferHh\nCreate Clearing API request|LocalEvents.V0.PreAuthClearingRequestCreatedV1
 
-end
-
-Note over TransferAgg: Select payment method and validate request
-
-alt Request validation successful
-
-TransferAgg->>TransferAgg: PreAuthRequestValid
-
-else Request validation failed
-
-TransferAgg->>Ether: PreAuthRequestInvalid
-
-TransferAgg->>Ether: PreAuthDeclined
-
-Note over TransferAgg: Processing stops here!
-
-end
-
-Note over TransferAgg: Create consumer tx
-
-TransferAgg->>ConsumerTxAgg: PreAuthConsumerTxCreated
-
-Note over ConsumerTxAgg: Process/validate pre_auth consumer tx
-
-%ConsumerTxAgg->>ConsumerTxAgg: ConsumerTxCreated
-
-  
-
-alt valid pre_auth consumer tx
-
-ConsumerTxAgg->>ConsumerTxAgg: PreAuthConsumerTxValid
-
-else invalid pre_auth consumer tx
-
-ConsumerTxAgg->>TransferAgg: PreAuthConsumerTxInvalid
-
-TransferAgg->>Ether: PreAuthDeclined
-
-Note over TransferAgg: Processing stops here!
-
-end
-
-  
-
-Note over ConsumerTxAgg: User confirmation needed?
-
-alt user confirmation required
-
-ConsumerTxAgg->>TsClientAgg: ConfirmationRequired
-
-%WalletPM->>WalletAgg: RequestConfirmation
-
-Note over TsClientAgg: Send confirmation request to Wallet and
-
-Note over TsClientAgg: wait for response
-
-alt user confirmation: payment accepted
-
-TsClientAgg->>ConsumerTxAgg: UserAccepted
-
-%TransferPM->>TransferAgg: ProcessConfirmation
-
-else user confirmation: payment rejected
-
-TsClientAgg->>ConsumerTxAgg: UserRejected
-
-ConsumerTxAgg->>TransferAgg: PreAuthConsumerTxDeclined
-
-TransferAgg->>Ether: PreAuthDeclined
-
-Note over TransferAgg: Processing stops here!
-
-end
-
-else user confirmation not needed
-
-ConsumerTxAgg->>Ether: ConfirmationNotNeeded
-
-end
-
-Note over ConsumerTxAgg: Clearing
-
-  
-
-ConsumerTxAgg->>ClearingApiClientAgg: PreAuthClearingApiCallRequested
-
-Note over ClearingApiClientAgg: Send Clearing API pre_aut request and
-
-Note over ClearingApiClientAgg: wait for response
-
-  
-
-%ClearingApiClientAgg->>ClearingApiClientAgg: CallClearingApiPreAuth
-
-alt issuer approved
-
-ClearingApiClientAgg->>ConsumerTxAgg: PreAuthClearingApiApproved
-
-ConsumerTxAgg->>TransferAgg: PreAuthConsumerTxApproved
-
-TransferAgg->>Ether: PreAuthApproved
-
-else issuer declined
-
-ClearingApiClientAgg->>ConsumerTxAgg: PreAuthClearingApiDeclined
-
-ConsumerTxAgg->>TransferAgg: PreAuthConsumerTxDeclined
-
-%TransferPM->>TransferAgg: DeclinePreAuth
-
-TransferAgg->>Ether: PreAuthDeclined
-
-end
+LocalEvents.V0.TokenRedemptionFailedV1-->|EbPayments.Dms.Transfer.TransferHh\n|LocalEvents.V0.PreAuthDeclinedV1
 
 ```
