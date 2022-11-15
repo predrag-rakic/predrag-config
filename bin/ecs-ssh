@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+#
+# Example:
+# GITHUB_NAME=scheme-services ecs-ssh remote 
+#
+
+[[ -z "$AWS_VAULT" ]] && { echo "YOU ARE NOT LOGGED IN AWS"; exit 1; } || echo "$AWS_VAULT"
+[[ -z "$GITHUB_NAME" ]] && { echo "GITHUB_NAME NOT SET"; exit 1; } || echo "$GITHUB_NAME"
+
+if [[ -z "$1" ]] ; then
+  args="remote"
+else
+  args=$*
+fi
+
+aws_environement=${AWS_VAULT/clearing-/}
+echo $aws_environement
+
+cluster=$(aws ecs list-clusters --region eu-central-1 | jq -r '.clusterArns | map(select(test("/'"${GITHUB_NAME}"'$"))) | .[0]')
+
+task=$(aws ecs list-tasks --cluster "${cluster}" | jq -r ".taskArns | .[0]")
+
+command="/opt/app/bin/default ${args}"
+
+container=${GITHUB_NAME}
+
+aws ecs execute-command \
+  --cluster "${cluster}" \
+  --task "${task}" \
+  --command "${command}" \
+  --container "${container}" \
+  --interactive

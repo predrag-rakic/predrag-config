@@ -1,109 +1,121 @@
-# Evented application EbPayments.Dms.App
+# Evented - State Machine as Sequence of Event Handlers
+
+## Introduction
+Evented is event-sourcing library/framework in which operations are represented as chains of retriable steps. Elements of the execution chain are connected and at the same time delimited with events.
+Each step is initiated by some event and emits another event as a result of execution. 
+
+## Recursive Nature of Nature
+When it comes to causality it is recursive: there is a cause that has an effect, but that effect is in turn cause for some other effect and so on... Can we model code similarly?
+
+If we look at state-machine (SM), input causes SM to (transition to another state and to) generate output. 
+That output can be recursively used as SM input.
+
+Can we split an arbitrary algorithm into (one or more) sequences of simple steps, where each sequence is initiated by an external stimulus/input? Why not?
+And if we agree that SM inputs and outputs are events, we got Evented. Mechanism conceptually described by the following flowchart: 
+```mermaid
+flowchart BT
 
   
 
-THIS IS GENERATED FILE
+exev([external event])
+
+es[(event store)]
+
+ce([chain processing stops])
+
+eh(event handler)
+
+stl(State transition logic)
+
+sl{{SM interested \n in this event?}}
 
   
 
-!!!!! DO NOT MODIFY !!!!!
+exev --> | persist event | es
+
+es --> sl
 
   
 
-## List of events:
+subgraph chl [Chain-handling logic]
+
+subgraph sm [State Machine]
+
+eh --> |new event| stl
+
+end
+
+sl --> |yes| eh
+
+end
 
   
 
-- EbPayments.Command.CreateCapture
-
-- EbPayments.Command.CreatePreAuth
-
-- EbPayments.Command.GetState
-
-- LocalEvents.V0.CaptureCallerAuthorizedV1
-
-- LocalEvents.V0.CaptureCallerNotAuthorizedV1
-
-- LocalEvents.V0.CaptureCreatedV1
-
-- LocalEvents.V0.CaptureDeclinedV1
-
-- LocalEvents.V0.PaymentMethodSelectedV1
-
-- LocalEvents.V0.PaymentMethodSelectionFailedV1
-
-- LocalEvents.V0.PreAuthApprovedV1
-
-- LocalEvents.V0.PreAuthClearingApprovedV1
-
-- LocalEvents.V0.PreAuthClearingDeclinedV1
-
-- LocalEvents.V0.PreAuthClearingRequestCreatedV1
-
-- LocalEvents.V0.PreAuthCreatedV1
-
-- LocalEvents.V0.PreAuthDeclinedV1
-
-- LocalEvents.V0.TokenNotRedeemableV1
-
-- LocalEvents.V0.TokenRedeemableV1
-
-- LocalEvents.V0.TokenRedeemedV1
-
-- LocalEvents.V0.TokenRedemptionFailedV1
-
-- :no_output_event
+sl --> |no| ce
 
   
 
-## Event Flowchart
+stl -.-> |current state| eh
 
-  
+stl --> |new state| stl
+
+sm --> | persist new event | es
+```
+
+
+
+
+
+## Topics to discuss
+### API
+- `inject_event/2`
+- `inject_event_and_wait/2` 
+  - Semantic?
+  - Wait for what? Wait for next event with the same correlation_id
+- `agg_state/2`
+  - Peek at the aggregate state from anywhere.
+    - This breaks encapsulation of the aggregate.
+  - Do we want this ability at all?
+  - Emit event every time somebody wants to look at the aggregate state? 
+    - Is it too expensive to be used by default?
+
+
+### Aggregate
+- What is it?
+  - Consistency boundary.
+  - Execution context (BEAM process within which SM executes).
+  - State of the SM.
+- How do we think about it?
+- What do we use it for?
+
+
+### Network split resilient?
+
 
 ```mermaid
-
-flowchart TD
-
-  
-
-EbPayments.Command.CreateCapture-->|EbPayments.Dms.Transfer.TransferHh\nCapture: parse input|LocalEvents.V0.CaptureCreatedV1
-
-EbPayments.Command.CreatePreAuth-->|EbPayments.Dms.Transfer.TransferHh\nPre-auth input validation|LocalEvents.V0.PreAuthCreatedV1
-
-EbPayments.Command.GetState-->|EbPayments.Dms.Transfer.TransferHh\nGet state|:no_output_event
-
-LocalEvents.V0.CaptureCreatedV1-->|EbPayments.Dms.Transfer.TransferHh\nCapture: authorize requester - validate partner|LocalEvents.V0.CaptureCallerAuthorizedV1
-
-LocalEvents.V0.CaptureCreatedV1-->|EbPayments.Dms.Transfer.TransferHh\nCapture: authorize requester - validate partner|LocalEvents.V0.CaptureCallerNotAuthorizedV1
-
-LocalEvents.V0.CaptureCreatedV1-->|EbPayments.Dms.Transfer.TransferHh\nCapture: authorize requester - validate partner|LocalEvents.V0.CaptureDeclinedV1
-
-LocalEvents.V0.PaymentMethodSelectedV1-->|EbPayments.Dms.Transfer.TransferHh\nRedeem token|LocalEvents.V0.TokenRedeemedV1
-
-LocalEvents.V0.PaymentMethodSelectedV1-->|EbPayments.Dms.Transfer.TransferHh\nRedeem token|LocalEvents.V0.TokenRedemptionFailedV1
-
-LocalEvents.V0.PaymentMethodSelectionFailedV1-->|EbPayments.Dms.Transfer.TransferHh\n|LocalEvents.V0.PreAuthDeclinedV1
-
-LocalEvents.V0.PreAuthClearingApprovedV1-->|EbPayments.Dms.Transfer.TransferHh\n|LocalEvents.V0.PreAuthApprovedV1
-
-LocalEvents.V0.PreAuthClearingDeclinedV1-->|EbPayments.Dms.Transfer.TransferHh\n|LocalEvents.V0.PreAuthDeclinedV1
-
-LocalEvents.V0.PreAuthClearingRequestCreatedV1-->|EbPayments.TransferProcessor.BC.ClearingApiLegacy.ClearingApiEv\nMake synchronous clearing API call|LocalEvents.V0.PreAuthClearingApprovedV1
-
-LocalEvents.V0.PreAuthClearingRequestCreatedV1-->|EbPayments.TransferProcessor.BC.ClearingApiLegacy.ClearingApiEv\nMake synchronous clearing API call|LocalEvents.V0.PreAuthClearingDeclinedV1
-
-LocalEvents.V0.PreAuthCreatedV1-->|EbPayments.Dms.Transfer.TransferHh\nToken lookup|LocalEvents.V0.TokenNotRedeemableV1
-
-LocalEvents.V0.PreAuthCreatedV1-->|EbPayments.Dms.Transfer.TransferHh\nToken lookup|LocalEvents.V0.TokenRedeemableV1
-
-LocalEvents.V0.TokenNotRedeemableV1-->|EbPayments.Dms.Transfer.TransferHh\n|LocalEvents.V0.PreAuthDeclinedV1
-
-LocalEvents.V0.TokenRedeemableV1-->|EbPayments.Dms.Transfer.TransferHh\nSelect payment method|LocalEvents.V0.PaymentMethodSelectedV1
-
-LocalEvents.V0.TokenRedeemableV1-->|EbPayments.Dms.Transfer.TransferHh\nSelect payment method|LocalEvents.V0.PaymentMethodSelectionFailedV1
-
-LocalEvents.V0.TokenRedeemedV1-->|EbPayments.Dms.Transfer.TransferHh\nCreate Clearing API request|LocalEvents.V0.PreAuthClearingRequestCreatedV1
-
-LocalEvents.V0.TokenRedemptionFailedV1-->|EbPayments.Dms.Transfer.TransferHh\n|LocalEvents.V0.PreAuthDeclinedV1
+flowchart TB
+    HandleEvt1(Handle Evt1 and generate Evt2 and Evt3)
+  Evt1 --> es_prim
+  subgraph es_prim [event-store in t0]
+   StoreEvt1
+  end
+  es_prim --> agg_t0
+  subgraph agg_t0 [Aggregate in t_1]
+    HandleEvt1 --> ApplyEvt2
+    HandleEvt1 --> ApplyEvt3
+  end
+  subgraph es [event-store in t2]
+    StoreEvt2_and_Evt3(Store Evt2 and Evt3 atomically and consecutively)
+  end
+    agg_t0 --> es
+    es --> agg_t1
+    agg_t1 --> agg_t2
+  subgraph agg_t1 [Aggregate in t_3]
+    HandleEvt2
+  end
+  subgraph agg_t2 [Aggregate in t_4]
+    HandleEvt3
+  end
 
 ```
+
