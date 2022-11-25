@@ -45,26 +45,31 @@ Evented application is a state machine. In order to interact with it, we need th
 - Introduce new events into the system and
 - Query current state of the system.
 
-## Introducing external events into the system
+## Injecting external events into the system
 We can choose to "inject" an event through a particular aggregate or just to persist it in event-store.
 
 ### Persisting event directly into event-store
 This approach allows for a random event to be persisted in event-store unrelated to any aggregate and to any processing. Such event is just there so that it can be used in the future. This is a sound theoretical approach, but in reality random events are rarely (if ever) persisted. Events are injected because they need to be processed in one way or the other. That leads us to "injecting through aggregate" approach.
 
 ### Injecting through aggregate
-Injecting an event through aggregate enables the aggregate to react to the event (to adjust its state according to the event - `apply/2` function) and only after that to persist the event in event-store in the output stream of the aggregate.
-Also, once the event is injected in the event-store through some aggregate, from handling perspective, it is the same as if it was injected directly into the event-store (without previously being handled by the aggregate).
+Injecting an event through aggregate enables the aggregate to:
+- react to the event (to adjust its state according to the event - `apply/2` function) and only after that to
+- persist the event in event-store in the output stream of the aggregate.
+Also, once the event is injected in the event-store through some aggregate, from handling perspective14, it is the same as if it was injected directly into the event-store (without previously being handled by the aggregate).
 The only characteristics that can be perceived as downside (compared to direct injection) is that if an event is injected through the aggregate, it has to be handled by the aggregate. In reality, it is not a real limitation.
 
 ## Querying current state 
 State of the system is composition of the states of the aggregates consisting the Evented app. The state of the app is eventually consistent and each of the aggregate's states have to be queried separately, without strong consistency guaranties.
 There are several ways to that:
-- Directly reading aggregate state and
+- Directly reading aggregate state
   - Exposing the state to the outside world.
-  - Providing translation layer (between the aggregate state and the caller) which generates state-event.
-- "Asking" aggregate to emit state-event into the event-store.
-  - Dispatching command to get output-event
-  - Injecting request-event through the aggregate in order to instruct it to emit state-event.
+  - Providing translation layer (between the aggregate state and the caller) which
+    - Returns state in some format other than internal aggregate state.
+    - Generates state-event 
+      - This is a bad idea because it breaks the promise that each subsequent event will be generated based on aggregate state, taking into consideration all previous events from the stream. It can happen that state-event is persisted after some event  which is not processed by aggregate and thus was not applied on the aggregate state.
+- "Asking" aggregate to emit state-event into the event-store. This can be done by injecting request-event through:
+  - The aggregate in order to instruct it to emit state-event.
+  - The even-store in order to instruct the aggregate to emit state-event.
 
 ### Encapsulation
 First option, "exposing state to the outside world", is technically speaking fastest (least overhead) but also dirtiest, since it requires coupling between internal representation of the state and the outside world.
@@ -85,16 +90,27 @@ then there is a guarantee that generated state-event will report payment as "cre
 
 # Topics to discuss
 ## API
+### Current
 - `inject_event/2`
 - `inject_event_and_wait/2` 
-  - Semantic?
-  - Wait for what? Wait for next event with the same correlation_id
-- `agg_state/2`
+  - Wait for what? Wait for next event with the same correlation_id.
+- `agg_state/2` 
   - Peek at the aggregate state from anywhere.
     - This breaks encapsulation of the aggregate.
   - Do we want this ability at all?
   - Emit event every time somebody wants to look at the aggregate state? 
     - Is it too expensive to be used by default?
+
+### Proposed change
+- Remove `inject_event/2`
+- Alter semantics of `inject_event_and_wait/2` 
+  - Dispatch event to particular aggregate.
+  - Becomes: `inject_event_and wait(event, aggregate, opts \\ [])`
+- Deprecate `agg_state/2` 
+  - Because it peeks into internal state of the aggregate
+- Introduce `state_event(aggregate, event_t)`
+  - Define (similarly to event_handler) `handle_state_request` macro which defines state-event to be emitted as output .
+
 
 
 ## Stateful Handler 
