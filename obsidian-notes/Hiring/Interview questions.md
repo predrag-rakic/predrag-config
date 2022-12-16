@@ -38,3 +38,6 @@
     -   Your perspective on using advanced DB features: views, triggers, embedded functions
 - Ever been in remote team?
 - Ever been in on-call rotation?
+
+
+Riak core?
