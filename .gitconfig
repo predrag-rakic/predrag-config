@@ -33,3 +33,7 @@
 [delta]
 	line-numbers = true 
 	diff-highlight = true
+
+#[url "https://github.com/"]
+#	        insteadOf = git@github.com:
+

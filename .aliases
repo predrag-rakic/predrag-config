@@ -67,7 +67,10 @@ export EDITOR=vim
 # I dont want it always - named pipe is arguably better solution
 # export LESSOPEN="| sed 's/^/    /' %s"
 
-export BC_DEV_DOMAIN=prakic.bloomco.de
+if [ `hostname` = "psr-VivoBook" ] ; then
+  export BC_DEV_DOMAIN=prakic.bloomco.de
+fi
+
 export BC_DEV_NO_WATCH_ASSETS=1
 export BC_DEV_ISSUER_PROC_SHARED_API_KEY=qwerty
 export BC_DEV_CLEARING_PROC_SHARED_API_KEY=yemen-redbird-session-scorpio
