@@ -11,7 +11,7 @@ export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 ZSH_THEME="robbyrussell"
 ZSH_THEME="agnoster"
 ZSH_THEME="juanghurtado"
-ZSH_THEME="psr"
+#ZSH_THEME="psr"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -69,8 +69,8 @@ plugins=(
   git
   kubectl
   ssh-agent
-  zsh-syntax-highlighting
-  zsh-autosuggestions
+#  zsh-syntax-highlighting
+#  zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -112,7 +112,7 @@ if [ -f ~/.aliases ]; then
 . ~/.aliases
 fi
 
-. $HOME/.asdf/asdf.sh
+#. $HOME/.asdf/asdf.sh
 
-. $HOME/.asdf/completions/asdf.bash
+#. $HOME/.asdf/completions/asdf.bash
 

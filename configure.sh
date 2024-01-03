@@ -47,11 +47,6 @@ files=$(find "$cfgdir" \( -type f -or -type l \) $ignore -print)
 
 hacks="
 chmod 700 ~/.ssh
-mkdir -p ~/.ssh/ctrl
-mkdir -p ~/.local/share/nautilus
-rm -f ~/.local/share/nautilus/scripts
-if [ -d ~/.gnome2/nautilus-scripts ]; then ln -f -s ~/.gnome2/nautilus-scripts ~/.local/share/nautilus/scripts; fi
-if [ \$(tmux -V | grep '2.1') ]; then ln -fs ~/.tmux.conf-2.1 ~/.tmux.conf; fi
 "
 
 #

@@ -1,12 +1,13 @@
 # Predrag's configuration
 
-## Before
-Install:
-
-- zsh shell
-- oh-my-zsh  `sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"`
 
 ## Install config files
 ```
 ./configure.sh
 ```
+
+## After 
+- sudo aptititude install zsh 
+### Install oh-my-zsh 
+- sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
