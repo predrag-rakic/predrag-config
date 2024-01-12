@@ -2,6 +2,7 @@ sudo apt install \
   zsh \
   vim \
   git gitk \
+  git-delta \
   mc \
   sysstat \
   aptitude \
@@ -13,6 +14,7 @@ sudo apt install \
   haproxy \
   libsodium-dev \
   dnsmasq \
+  gnome-shell-extensions \
   postgresql-client
 
 #curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
