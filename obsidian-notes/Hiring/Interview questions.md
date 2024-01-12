@@ -3,7 +3,7 @@
 
 ## About me
 
--   Predrag, Novi Sad, 20+ years in computing, 3.5 years, startup mode, things will change for the better vs less comfortable
+-   Predrag, Novi Sad, 20+ years in computing, 4 years, startup mode, things will change for the better vs less comfortable
 
 ## What are we doing here
 
@@ -36,6 +36,9 @@
         -   It as about transaction synchronization.
         -   desirable sequential-consistency
     -   Your perspective on using advanced DB features: views, triggers, embedded functions
+- Concurrency
+  - race condition
+    - What is it? How did we get there, and how do we get out of there?
 - Ever been in remote team?
 - Ever been in on-call rotation?
 

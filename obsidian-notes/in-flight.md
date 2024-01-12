@@ -119,3 +119,26 @@ flowchart TB
 
 ```
 
+
+### Concurrency
+
+All events in event-store are totally ordered, but they do not need to be processed in total order. It is enough if all events in which each aggregate instance is interested in, are process in partial order. Handling of events between different aggregate instances can be concurrent/out-of-total-order.
+
+Always keep in mind that there are
+strict ordering guaranties within a single aggregate instance, but
+there are only partial ordering guaranties between different aggregate instances.
+
+#### Aliased events
+
+Events that do not have an identifier required by aggregate class to determine which instance they should be handled by, still can be handled by aggregate class by relying on the mechanism of aliases.
+Aliases relay on the assumption that there is some indirection mechanism, allowing for an aggregate identifier value to be determined.
+If implemented manually, that mechanism would require:
+- existence of additional aggregate class responsible for resolving this indirection and
+- existence of additional event (hidden/replaced by the alias mechanism) that would be persisted after the original (aliased) one and would contain a proper identifier which would enable aggregate class to locate/identify instance.
+Previous analyses is important because it exposes conceptual necessity of "additional/hidden event". Consequently, if there is a need for this "hidden" event to exist and to be persisted by some other aggregate instance, before processing of that aliased event can continue, that means that partial ordering guaranties cannot (and do not) apply to aliased event. 
+Partial order guaranties would apply to the hidden event, if it would exist.
+So, it is essential to keep in mind that **aliased event can be handled out of order**.
+
+### Concurrency implementation
+Each aggregate class has its own subscription group in event-store.
+Each subscription group has its own partitioning algorithm.
