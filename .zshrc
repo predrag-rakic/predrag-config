@@ -69,6 +69,7 @@ plugins=(
   git
   kubectl
   ssh-agent
+  asdf
 #  zsh-syntax-highlighting
 #  zsh-autosuggestions
 )
