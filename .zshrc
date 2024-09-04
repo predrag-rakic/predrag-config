@@ -117,3 +117,5 @@ fi
 
 #. $HOME/.asdf/completions/asdf.bash
 
+eval "$(direnv hook zsh)"
+

@@ -54,7 +54,7 @@ alias lll="exa -la --git"
 alias ppllogs="stern 'plumber-.{8}-' -c plumber$ --output raw --since 15m > /tmp/ppl_logs & less +F /tmp/ppl_logs ; fg"
 
 # Scheme service
-alias scheme-db="docker run -d --rm --name db --network=host mdillon/postgis:10 postgres -N 200 ; \
+alias scheme-db="docker run -d --rm --name db -e POSTGRES_PASSWORD=postgres --network=host postgis/postgis:13-3.3-alpine postgres -N 200 ; \
   sleep 8; \
   psql -U postgres -h localhost postgres -c 'create user bluecode_core with superuser; create user bluecode with superuser;' \
 
