@@ -9,6 +9,9 @@ alias gbr="git branch"
 alias artc="cd ~/w/artifact-client/"
 alias arts="cd ~/w/artifact-server/"
 
+# mix aliases
+alias mt="MIX_ENV=test mix ecto.migrate --log-migrations-sql; mix test"
+
 # K8s
 alias k="kubectl"
 alias kx="kubectx"
@@ -25,10 +28,10 @@ alias ecs="BUNDLE_GEMFILE=/home/psr/w/inframan/Gemfile bundle exec inframan ecs"
 alias cluster="ecs cluster"
 
 # Tmux
-alias tm="cd ~/w/scheme-services ; \
+alias tm="cd ~/w/bc/scheme-services ; \
           tmux new -s \`basename \$(pwd)\` \; \
                send-keys ll C-m \; \
-               send-keys 'scheme-db' \; \
+               send-keys 'iex -S mix phx.server' \; \
                split-w  \; \
                send-keys 'g --no-pager ll -5' C-m C-m C-m 'g st' C-m\; \
                send-keys 'mkfifo /tmp/scheme-services-log' C-m \; \
@@ -38,13 +41,16 @@ alias tm="cd ~/w/scheme-services ; \
                neww \; send-keys 'psql -U postgres -h localhost sdk_api_dev' \; \
                split-w \; send-keys 'sudo haproxy -f etc/bluecode/haproxy/haproxy.cfg' \; \
                split-w \; \
-               neww \; select-window -t 1 \; select-pane -t 1 \; \
+               neww \; \
                neww \; \
                neww \; \
                send-keys 'cd ../acquibase' C-m \; \
                split-w \; send-keys 'cd ../acquibase' C-m \; \
                neww \; \
+               neww \; \
+               send-keys 'cd .. ; docker compose start' C-m\; \
                select-window -t 1 \; select-pane -t 1 \; \
+
                "
 
 # exa
@@ -67,14 +73,6 @@ export EDITOR=vim
 # I dont want it always - named pipe is arguably better solution
 # export LESSOPEN="| sed 's/^/    /' %s"
 
-if [ `hostname` = "psr-VivoBook" ] ; then
-  export BC_DEV_DOMAIN=prakic.bloomco.de
-fi
-
-export BC_DEV_NO_WATCH_ASSETS=1
-export BC_DEV_ISSUER_PROC_SHARED_API_KEY=qwerty
-export BC_DEV_CLEARING_PROC_SHARED_API_KEY=yemen-redbird-session-scorpio
-export BC_DEV_ADMIN_PASSWORD=developer@bluecode.com
 export ERL_AFLAGS="-kernel shell_history enabled -kernel shell_history_file_bytes 1024000 +S3"
 export SYSTEMTEST_DOMAIN=$BC_DEV_DOMAIN
 

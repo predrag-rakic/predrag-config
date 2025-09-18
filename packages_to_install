@@ -20,6 +20,12 @@ sudo apt install \
 # Strange way to install but it is what it is...
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf
 
+# asdf
+# Install:
+# - downaload binary from https://github.com/asdf-vm/asdf/releases
+# - unpack
+# - move to ~/bin (or similar)
+
 #curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 #sudo apt-add-repository "deb https://dl.yarnpkg.com/debian/ stable main"
 #sudo apt install --no-install-recommends yarn
@@ -30,3 +36,16 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb
 
 sudo snap install code --classic
 sudo snap install slack --classic
+
+# Install Nickel compiler and language server:
+#
+# - download from https://github.com/tweag/nickel/releases :
+#   - nickel-x86_64-linux and
+#   - nls-x86_64-linux
+# - move them to ~/bin
+# - make them executable:
+chmod +x nickel-x86_64-linux nls-x86_64-linux
+# - create simlinks:
+ln -s nickel-x86_64-linux nickel
+ln -s nls-x86_64-linux nls
+
