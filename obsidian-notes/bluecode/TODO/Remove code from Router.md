@@ -1,2 +1,0 @@
-- PaymentsWeb.Api.V3.PreAuthController
-- PaymentsWeb.Experimental.Api.V3.PreAuthController
