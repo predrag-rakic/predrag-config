@@ -3,7 +3,7 @@
 [alias]
 	a   = add
 	co  = checkout
-	mas = checkout master
+	mas = !git checkout $GIT_DEFAULT_BRANCH
 	d   = diff
 	l   = log --decorate --graph --all -4
 	st  = status
@@ -12,10 +12,15 @@
 	cm  = commit -a -m
 	wip = commit -a -m "WIP"
 	po  = push origin
-        ll  = "log --format=format:'%C(red)%h%C(reset) %C(green)%an%C(reset) %C(yellow)(%ar)%C(reset) %C(blue)%d%C(reset) %C(white)%s%C(reset)' --abbrev-commit --date=relative --graph -18 HEAD master origin/master"
+	ll  = "! \
+		origin_head() { head=$(git symbolic-ref --short -q HEAD); echo ${head:+origin/$head}; }; \
+		git log \
+		    --format=format:'%C(red)%h%C(reset) %C(green)%an%C(reset) %C(yellow)(%ar)%C(reset) %C(blue)%d%C(reset) %C(white)%s%C(reset)' \
+		    --abbrev-commit --date=relative --graph -18 \
+		    HEAD $(origin_head) $GIT_DEFAULT_BRANCH origin/$GIT_DEFAULT_BRANCH "
         lll = "log --format=format:'%C(red)%h%C(reset) %C(green)%an%C(reset) %C(yellow)(%ar)%C(reset) %C(blue)%d%C(reset) %C(white)%s%C(reset)' --abbrev-commit --date=relative --graph --all -12"
 
-	mam = !git fetch && git checkout master && git merge origin/master && git ll
+	mam = !git fetch && git checkout $GIT_DEFAULT_BRANCH && git merge origin/$GIT_DEFAULT_BRANCH && git ll
 
 [push]
 	default = current

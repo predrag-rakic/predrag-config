@@ -5,7 +5,7 @@ alias plu="cd ~/w/plumber"
 alias g="git"
 alias gst="git status"
 alias gco="git checkout"
-alias gbr="git branch"
+alias gb="git branch --sort=-committerdate -v"
 alias artc="cd ~/w/artifact-client/"
 alias arts="cd ~/w/artifact-server/"
 
@@ -77,3 +77,4 @@ export ERL_AFLAGS="-kernel shell_history enabled -kernel shell_history_file_byte
 export SYSTEMTEST_DOMAIN=$BC_DEV_DOMAIN
 
 xset r rate 190 40
+

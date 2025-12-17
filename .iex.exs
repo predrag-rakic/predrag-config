@@ -6,7 +6,7 @@ defmodule Dbg do
   end
 
   def stop_trace do
-    :dbg.stop_clear()
+    :dbg.stop()
   end
 end
 
@@ -44,7 +44,7 @@ defmodule T do
   end
 
   def do_recompile_and_tests(test_files, recompile_targets, timeout) when is_list(test_files) do
-    ExUnit.start()
+    ExUnit.start(timeout: :infinity)
     task = Task.async(ExUnit, :run, [])
 
     List.wrap(recompile_targets)
@@ -59,7 +59,7 @@ defmodule T do
     |> List.flatten()
     |> Enum.each(&Code.compile_file/1)
 
-    ExUnit.Server.modules_loaded()
+    ExUnit.Server.modules_loaded(:a)
     Task.await(task, timeout)
   end
 
@@ -91,3 +91,7 @@ end
 
 # Dbg.trace(ExUnit.Server, :handle_call, :x)
 # Dbg.trace(ExUnit, :configure, :x)
+
+IO.puts ""
+IO.puts "To set breakpoint use: 'break! Module.function/n, break_count'"
+IO.puts "To run test use: 'T.recompile_and_tests(\"test_file_name:line\")'"
